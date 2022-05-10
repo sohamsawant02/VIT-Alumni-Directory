@@ -91,7 +91,6 @@ def update():
             e_current.delete(0, 'end')
             b2.config(text="Image Uploaded", image='', bg="white")
             MessageBox.showinfo("Update Status", "Account Updated Successfully")
-            alumni_report()
         except Exception as e:
             MessageBox.showerror("Backend Error", e)
 
@@ -286,6 +285,7 @@ def jobpost():
             e_post.delete(0, 'end')
             e_location.delete(0, 'end')
             e_applylink.delete(0, 'end')
+            e_minquali.set('')
             MessageBox.showinfo("Post Status", "Job Posted")
             connect4.close()
             showjobs()

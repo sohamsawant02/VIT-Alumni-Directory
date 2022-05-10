@@ -229,20 +229,20 @@ canvas2.create_text(300, 180, text="Branch", font=('Roboto','13','bold'))
 canvas2.create_text(300, 230, text="Passout Year", font=('Roboto','13','bold'))
 
 
-e_srno = ttk.Entry(tab2, width=20, font=('Roboto','13','bold'))
+e_srno = ttk.Entry(tab2, width=20, font=('Roboto','13'))
 e_srno.place(x=435,y=20)
 
-e_rollno = ttk.Entry(tab2, width=20, font=('Roboto','13','bold'))
+e_rollno = ttk.Entry(tab2, width=20, font=('Roboto','13'))
 e_rollno.place(x=435,y=70)
 
-e_name = ttk.Entry(tab2, width=20, font=('Roboto','13','bold'))
+e_name = ttk.Entry(tab2, width=20, font=('Roboto','13'))
 e_name.place(x=435,y=120)
 
-e_branchh = ttk.Combobox(tab2, width=18, state="readonly", font=('Roboto','13','bold'))
+e_branchh = ttk.Combobox(tab2, width=18, state="readonly", font=('Roboto','13'))
 e_branchh['values'] = ('Information Technology', 'Computer Engineering', 'Electronics Engineering', 'Electronics and Telecommunication Engineering', 'Biomedical Engineering', 'Management Studies')
 e_branchh.place(x=435,y=170)
 
-e_pass = ttk.Combobox(tab2, width=18, state="readonly", font=('Roboto','13','bold'))
+e_pass = ttk.Combobox(tab2, width=18, state="readonly", font=('Roboto','13'))
 e_pass['values'] = (
        '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014',
        '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024')
@@ -323,7 +323,7 @@ def eventpost():
             e_ename.delete(0, 'end')
             e_description.delete(0, 'end')
             e_venue.delete(0, 'end')
-            MessageBox.showinfo("Post Status", "Job Posted")
+            MessageBox.showinfo("Post Status", "Event Posted")
             connect4.close()
             showevent()
         except Exception as e:
@@ -436,7 +436,7 @@ def jobdel():
             connect2 = mysql.connect(host="localhost", user="root", password="", database="vit_alumni_directory")
             cursor2 = connect2.cursor()
             cursor2.execute("delete from jobs where ID='" + e_jid.get() + "'")
-            cursor2.execute("commit");
+            cursor2.execute("commit")
             e_eid.delete(0, 'end')
             e_ename.delete(0, 'end')
             e_date.delete(0, 'end')
@@ -481,24 +481,24 @@ canvas4.create_text(300, 180, text="Min Qualification", font=('Roboto','13','bol
 canvas4.create_text(300, 230, text="Location", font=('Roboto','13','bold'))
 canvas4.create_text(300, 280, text="Apply Link", font=('Roboto','13','bold'))
 
-e_jid = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_jid = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_jid.place(x=435,y=20)
 
-e_company = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_company = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_company.place(x=435,y=70)
 
-e_post = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_post = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_post.place(x=435,y=120)
 
-e_minquali = ttk.Combobox(tab4, width=18, state="readonly", font=('Roboto','13','bold'))
+e_minquali = ttk.Combobox(tab4, width=18, state="readonly", font=('Roboto','13'))
 e_minquali['values'] = (
 'BE/BTech(IT/CO)', 'ME/MTech(IT/CO)', 'BE/BTech(EXTC/ETRX)', 'ME/MTech(EXTC/ETRX)', 'BE/BTech(BIOM)', 'ME/MTech(BIOM)')
 e_minquali.place(x=435,y=170)
 
-e_location = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_location = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_location.place(x=435,y=220)
 
-e_applylink = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_applylink = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_applylink.place(x=435,y=270)
 
 post = Button(tab4, text="  Post  ", bg="blue", fg="white", font="Verdana 12 bold",command=jobpost)

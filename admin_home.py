@@ -447,7 +447,7 @@ def updatejob():
         connect11 = mysql.connect(host="localhost", user="root", password="", database="vit_alumni_directory")
         cursor11 = connect11.cursor()
         cursor11.execute("update jobs set Company='" + update_company + "',Post='" + update_post + "',MinQuali='" + update_minquali + "',Location='" + update_location + "',ApplyLink='" + update_applylink + "' where ID='" + update_jobid + "'")
-        cursor11.execute("commit");
+        cursor11.execute("commit")
 
         e_company.delete(0, 'end')
         e_post.delete(0, 'end')
@@ -456,7 +456,7 @@ def updatejob():
         e_applylink.delete(0, 'end')
         MessageBox.showinfo("Update Status", "Updated Successfully")
         showjobs()
-        connect11.close();
+        connect11.close()
 
 def addjob():
     get_company = e_company.get()
@@ -476,7 +476,7 @@ def addjob():
             e_jobid.delete(0,'end')
             e_company.delete(0, 'end')
             e_post.delete(0, 'end')
-            e_minquali.delete(0, 'end')
+            e_minquali.set('')
             e_location.delete(0, 'end')
             e_applylink.delete(0, 'end')
             MessageBox.showinfo("Job Status", "Job Posted")
