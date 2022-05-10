@@ -1,5 +1,6 @@
 import io
 import os
+import re
 from tkinter import *
 import tkinter.messagebox as MessageBox
 import mysql.connector as mysql
@@ -72,6 +73,9 @@ def update():
     if get_rollno == "" or get_name == "" or get_phone == "" or get_pass == "" or get_current == "":
         MessageBox.showerror("Update Status", "All fields are required")
     else:
+      if not re.match("(?=.*\d).{10}", get_phone):
+            MessageBox.showerror("Mobile Number Error", "Please enter the valid mobile number")
+      else:
         try:
             fob = open(filename, 'rb')  # filename from upload_file()
             fob = fob.read()
@@ -134,21 +138,43 @@ canvas2.pack(fill="both", expand=True)
 # Display image
 canvas2.create_image(0, 0, image=bg,anchor="nw")
 
-def filterSearch(*args):
-    items = tree3.get_children()
-    search1 = q.get().capitalize()
-    for i in items:
-        if search1 in tree3.item(i)['values'][1]:
-            search_var = tree3.item(i)['values']
-            tree3.delete(i)
-            tree3.insert("", 0, values=search_var)
+# def filterSearch(*args):
+#     consearch = mysql.connect(host="localhost", user="root", password="", database="vit_alumni_directory")
+#     searchcur = consearch.cursor()
+#     searchcur.execute("Select Name from alumni_login")
+#     searchrows = searchcur.fetchall()
+#     global names
+#     names=[]
+#     for row in searchrows:
+#         names.append(row)
+#     print(names)
+#     ids = []
+#     for i in range(len(names)):
+#         ids.append(tree3.insert("", "end",text=names[i]))
+#     print(ids)
+#     command()
+#
+# def command():
+#     selections = []
+#     for i in range(len(names)):
+#         if search.get() != "" and search.get() == names[i][:len(search.get())]:
+#             selections.append(names[i])
+#     tree3.selection_set(selections)
+
+    # items = tree3.get_children()
+    # search1 = q.get().capitalize()
+    # for i in items:
+    #     if search1 in tree3.item(i)['values'][1]:
+    #         search_var = tree3.item(i)['values']
+    #         tree3.delete(i)
+    #         tree3.insert("", 0, values=search_var)
 
 
-canvas2.create_text(300, 24, text="Search Alumni", font=('Roboto','13','bold'))
-q=StringVar()
-search = ttk.Entry(tab2, font=('Roboto','13'),textvariable=q)
-search.place(x=410, y=12)
-q.trace("w",filterSearch)
+# canvas2.create_text(300, 24, text="Search Alumni", font=('Roboto','13','bold'))
+# q=StringVar()
+# search = ttk.Entry(tab2, font=('Roboto','13'),textvariable=q)
+# search.place(x=410, y=12)
+# q.trace("w",filterSearch)
 
 try:
   connect1=mysql.connect(host="localhost",user="root",password="",database="vit_alumni_directory")
@@ -159,15 +185,15 @@ try:
       global tree3
       tree3 = ttk.Treeview(tab2, style = 'style1.Treeview')
       style1 = ttk.Style(tab2)
-      style1.configure("style1.Treeview", rowheight=50)  # set row height
+      style1.configure("style1.Treeview", rowheight=55)  # set row height
       tree3['columns'] = ("RollNo","Name","PassoutYear","MobileNo","Branch","Work Company")
-      tree3.column("#0", width=150, stretch='NO',minwidth=150)  # set width
+      tree3.column("#0", width=90,minwidth=90)  # set width
       tree3.column("RollNo", width=100, anchor='w',minwidth=100)
-      tree3.column("Name", width=100, anchor='w',minwidth=100)
+      tree3.column("Name", width=120, anchor='w',minwidth=120)
       tree3.column("PassoutYear", width=100, anchor='w',minwidth=100)
       tree3.column("MobileNo", width=100, anchor='w',minwidth=100)
-      tree3.column("Branch", width=150, anchor='w',minwidth=150)
-      tree3.column("Work Company", width=150, anchor='w',minwidth=150)
+      tree3.column("Branch", width=170, anchor='w',minwidth=170)
+      tree3.column("Work Company", width=160, anchor='w',minwidth=160)
 
       tree3.heading("#0", anchor='w', text='Image')
       tree3.heading("RollNo", anchor='w', text="RollNo")
@@ -188,13 +214,12 @@ try:
                          image=dp, values=(record[0],record[1],record[3],record[4],record[5],record[6],))  # use "image" option for the image
           tree3.imglist.append(dp)  # save the image reference
           count += 1
-
       for record in cursor1:
           # print(record)
           tree3.insert(parent='', index='end', id=count, text='Parent',
                          values=(record[0]))
           count += 1
-      tree3.place(x=40, y=50)
+      tree3.place(x=40, y=30)
 
 except Exception as e:
     MessageBox.showerror("Backend Error", e)

@@ -59,20 +59,20 @@ canvas1 = Canvas(tab1, width=600,height=690)
 canvas1.pack(fill="both", expand=True)
 # Display image
 canvas1.create_image(0, 0, image=bg,anchor="nw")
-def filterSearch(*args):
-    items=tree2.get_children()
-    search1=q.get().capitalize()
-    for i in items:
-        if search1 in tree2.item(i)['values'][1]:
-            search_var1=tree2.item(i)['values']
-            tree2.delete(i)
-            tree2.insert("",0,values=search_var1)
+# def filterSearch(*args):
+#     items=tree2.get_children()
+#     search1=q.get().capitalize()
+#     for i in items:
+#         if search1 in tree2.item(i)['values'][1]:
+#             search_var1=tree2.item(i)['values']
+#             tree2.delete(i)
+#             tree2.insert("",0,values=search_var1)
 
-canvas1.create_text(300, 24, text="Search Alumni", font=('Roboto','13','bold'))
-q=StringVar()
-search = ttk.Entry(tab1, font=('Roboto','13'), textvariable=q)
-search.place(x=410, y=12)
-q.trace("w", filterSearch)
+# canvas1.create_text(300, 24, text="Search Alumni", font=('Roboto','13','bold'))
+# q=StringVar()
+# search = ttk.Entry(tab1, font=('Roboto','13'), textvariable=q)
+# search.place(x=410, y=12)
+# q.trace("w", filterSearch)
 
 try:
   connect6=mysql.connect(host="localhost",user="root",password="",database="vit_alumni_directory")
@@ -83,14 +83,14 @@ try:
       global tree2
       tree2 = ttk.Treeview(tab1, style = 'style1.Treeview')
       style1 = ttk.Style(tab1)
-      style1.configure("style1.Treeview", rowheight=80)  # set row height
+      style1.configure("style1.Treeview", rowheight=55)  # set row height
       tree2['columns'] = ("RollNo", "Name", "PassoutYear", "MobileNo", "Branch", "Work Company")
-      tree2.column("#0", width=150, stretch='NO', minwidth=150)  # set width
+      tree2.column("#0", width=100, minwidth=100)  # set width
       tree2.column("RollNo", width=100, anchor='w', minwidth=100)
-      tree2.column("Name", width=100, anchor='w', minwidth=100)
+      tree2.column("Name", width=120, anchor='w', minwidth=120)
       tree2.column("PassoutYear", width=100, anchor='w', minwidth=100)
       tree2.column("MobileNo", width=100, anchor='w', minwidth=100)
-      tree2.column("Branch", width=150, anchor='w', minwidth=150)
+      tree2.column("Branch", width=160, anchor='w', minwidth=160)
       tree2.column("Work Company", width=150, anchor='w', minwidth=150)
 
       tree2.heading("#0", anchor='w', text='Image')
@@ -106,7 +106,7 @@ try:
       tree2.imglist = []
       for record in cursor6:
           dp = Image.open(io.BytesIO(record[2]))
-          dp.thumbnail((80, 80))  # resize the image to desired size
+          dp.thumbnail((50, 50))  # resize the image to desired size
           dp = ImageTk.PhotoImage(dp)
           tree2.insert(parent="", index="end", id=count,
                        image=dp, values=(
@@ -119,7 +119,7 @@ try:
           tree2.insert(parent='', index='end', id=count, text='Parent',
                        values=(record[0]))
           count += 1
-      tree2.place(x=40, y=50)
+      tree2.place(x=35, y=30)
 
 except Exception as e:
     MessageBox.showerror("Backend Error", e)
@@ -178,7 +178,6 @@ canvas3.pack(fill="both", expand=True)
 # Display image
 canvas3.create_image(0, 0, image=bg,anchor="nw")
 def addevent():
-    get_id=e_id.get()
     get_eventname = e_eventname.get()
     get_description = e_description.get()
     get_date = e_date.get_date().strftime("%d/%m/%Y")
@@ -188,15 +187,14 @@ def addevent():
     get_venue = e_venue.get()
     get_time=get_hr+":"+get_min+" "+get_ampm
 
-    if get_id=="" or get_eventname == "" or get_description == "" or get_date == "" or get_hr == "" or get_min == "" or get_ampm == ""or get_venue == "":
+    if get_eventname == "" or get_description == "" or get_date == "" or get_hr == "" or get_min == "" or get_ampm == ""or get_venue == "":
         MessageBox.showerror("Event Status", "All fields are required")
     else:
         try:
             connect1 = mysql.connect(host="localhost", user="root", password="", database="vit_alumni_directory")
             cursor1 = connect1.cursor()
-            cursor1.execute("Insert into events values('" + get_id + "','" + get_eventname + "','" + get_description + "','" + get_date + "','" + get_time + "','" + get_venue + "')")
+            cursor1.execute("Insert into events values(NULL,'" + get_eventname + "','" + get_description + "','" + get_date + "','" + get_time + "','" + get_venue + "')")
             cursor1.execute("commit")
-            e_id.delete(0,'end')
             e_eventname.delete(0, 'end')
             e_description.delete(0, 'end')
             e_venue.delete(0, 'end')
@@ -267,7 +265,7 @@ def updateevent():
         connect5 = mysql.connect(host="localhost", user="root", password="", database="vit_alumni_directory")
         cursor5 = connect5.cursor()
         cursor5.execute("update events set EventName='" + update_eventname + "',Description='" + update_description + "',Date='" + update_date + "',Time='" + update_time + "',Venue='" + update_venue + "' where ID='" + update_id + "'")
-        cursor5.execute("commit");
+        cursor5.execute("commit")
 
         e_id.delete(0, 'end')
         e_eventname.delete(0, 'end')
@@ -285,13 +283,13 @@ canvas3.create_text(300, 180, text="Date", font=('Roboto','13','bold'))
 canvas3.create_text(300, 230, text="Time", font=('Roboto','13','bold'))
 canvas3.create_text(300, 280, text="Venue", font=('Roboto','13','bold'))
 
-e_id = ttk.Entry(tab3, width=20, font=('Roboto','13','bold'))
+e_id = ttk.Entry(tab3, width=20, font=('Roboto','13'))
 e_id.place(x=435,y=20)
 
-e_eventname = ttk.Entry(tab3, width=20, font=('Roboto','13','bold'))
+e_eventname = ttk.Entry(tab3, width=20, font=('Roboto','13'))
 e_eventname.place(x=435,y=70)
 
-e_description = ttk.Entry(tab3, width=20, font=('Roboto','13','bold'))
+e_description = ttk.Entry(tab3, width=20, font=('Roboto','13'))
 e_description.place(x=435,y=120)
 
 e_date = DateEntry(tab3,selectmode="day", date_pattern='dd-MM-yyyy')
@@ -307,7 +305,7 @@ my_list=['AM', 'PM']
 e_ampm = Spinbox(tab3,values=my_list,width=5,state="readonly",wrap=True)
 e_ampm.place(x=530,y=220)
 
-e_venue = ttk.Entry(tab3, width=20, font=('Roboto','13','bold'))
+e_venue = ttk.Entry(tab3, width=20, font=('Roboto','13'))
 e_venue.place(x=435,y=270)
 
 post = Button(tab3, text="  Post  ", bg="blue", fg="white", font=('Roboto','13','bold'),command=addevent)
@@ -494,24 +492,24 @@ canvas4.create_text(300, 180, text="Min Qualification", font=('Roboto','13','bol
 canvas4.create_text(300, 230, text="Location", font=('Roboto','13','bold'))
 canvas4.create_text(300, 280, text="Apply Link", font=('Roboto','13','bold'))
 
-e_jobid = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_jobid = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_jobid.place(x=435,y=20)
 
-e_company = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_company = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_company.place(x=435,y=70)
 
-e_post = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_post = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_post.place(x=435,y=120)
 
-e_minquali = ttk.Combobox(tab4, width=18, state="readonly", font=('Roboto','13','bold'))
+e_minquali = ttk.Combobox(tab4, width=18, state="readonly", font=('Roboto','13'))
 e_minquali['values'] = (
 'BE/BTech(IT/CO)', 'ME/MTech(IT/CO)', 'BE/BTech(EXTC/ETRX)', 'ME/MTech(EXTC/ETRX)', 'BE/BTech(BIOM)', 'ME/MTech(BIOM)')
 e_minquali.place(x=435,y=170)
 
-e_location = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_location = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_location.place(x=435,y=220)
 
-e_applylink = ttk.Entry(tab4, width=20, font=('Roboto','13','bold'))
+e_applylink = ttk.Entry(tab4, width=20, font=('Roboto','13'))
 e_applylink.place(x=435,y=270)
 
 postb = Button(tab4, text="  Post  ", bg="blue", fg="white", font=('Roboto','13','bold'),command=addjob)

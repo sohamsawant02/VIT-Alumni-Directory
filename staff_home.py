@@ -60,21 +60,21 @@ canvas1 = Canvas(tab1, width=600,height=690)
 canvas1.pack(fill="both", expand=True)
 # Display image
 canvas1.create_image(0, 0, image=bg,anchor="nw")
-def filterSearch(*args):
-    items=tree3.get_children()
-    search1=q.get().capitalize()
-    for i in items:
-        if search1 in tree3.item(i)['values'][1]:
-            search_var=tree3.item(i)['values']
-            tree3.delete(i)
-            tree3.insert("",0,values=search_var)
+# def filterSearch(*args):
+#     items=tree3.get_children()
+#     search1=q.get().capitalize()
+#     for i in items:
+#         if search1 in tree3.item(i)['values'][1]:
+#             search_var=tree3.item(i)['values']
+#             tree3.delete(i)
+#             tree3.insert("",0,values=search_var)
 
-canvas1.create_text(300, 24, text="Search Alumni", font=('Roboto','13','bold'))
-
-q=StringVar()
-search = ttk.Entry(tab1, font=('Roboto','13','bold'),textvariable=q)
-search.place(x=410, y=12)
-q.trace("w",filterSearch)
+# canvas1.create_text(300, 24, text="Search Alumni", font=('Roboto','13','bold'))
+#
+# q=StringVar()
+# search = ttk.Entry(tab1, font=('Roboto','13','bold'),textvariable=q)
+# search.place(x=410, y=12)
+# q.trace("w",filterSearch)
 
 try:
   connect1=mysql.connect(host="localhost",user="root",password="",database="vit_alumni_directory")
@@ -85,15 +85,15 @@ try:
       global tree3
       tree3 = ttk.Treeview(tab1, style='style1.Treeview')
       style1 = ttk.Style(tab2)
-      style1.configure("style1.Treeview", rowheight=50)  # set row height
+      style1.configure("style1.Treeview", rowheight=55)  # set row height
       tree3['columns'] = ("RollNo", "Name", "PassoutYear", "MobileNo", "Branch", "Work Company")
-      tree3.column("#0", width=150, stretch='NO', minwidth=150)  # set width
+      tree3.column("#0", width=100, minwidth=100)  # set width
       tree3.column("RollNo", width=100, anchor='w', minwidth=100)
-      tree3.column("Name", width=100, anchor='w', minwidth=100)
+      tree3.column("Name", width=120, anchor='w', minwidth=120)
       tree3.column("PassoutYear", width=100, anchor='w', minwidth=100)
       tree3.column("MobileNo", width=100, anchor='w', minwidth=100)
-      tree3.column("Branch", width=150, anchor='w', minwidth=150)
-      tree3.column("Work Company", width=150, anchor='w', minwidth=150)
+      tree3.column("Branch", width=170, anchor='w', minwidth=170)
+      tree3.column("Work Company", width=160, anchor='w', minwidth=160)
 
       tree3.heading("#0", anchor='w', text='Image')
       tree3.heading("RollNo", anchor='w', text="RollNo")
@@ -121,7 +121,7 @@ try:
           tree3.insert(parent='', index='end', id=count, text='Parent',
                        values=(record[0]))
           count += 1
-      tree3.place(x=40, y=50)
+      tree3.place(x=35, y=30)
 
 except Exception as e:
     MessageBox.showerror("Backend Error", e)
@@ -336,30 +336,30 @@ canvas3.create_text(300, 180, text="Date", font=('Roboto','13','bold'))
 canvas3.create_text(300, 230, text="Time", font=('Roboto','13','bold'))
 canvas3.create_text(300, 280, text="Venue", font=('Roboto','13','bold'))
 
-e_eid = ttk.Entry(tab3,width=20, font=('Roboto','13','bold'))
-e_eid.place(x=435,y=30)
+e_eid = ttk.Entry(tab3,width=20, font=('Roboto','13'))
+e_eid.place(x=435,y=20)
 
-e_ename = ttk.Entry(tab3, width=20, font=('Roboto','13','bold'))
-e_ename.place(x=435,y=80)
+e_ename = ttk.Entry(tab3, width=20, font=('Roboto','13'))
+e_ename.place(x=435,y=70)
 
-e_description = ttk.Entry(tab3, width=20, font=('Roboto','13','bold'))
-e_description.place(x=435,y=130)
+e_description = ttk.Entry(tab3, width=20, font=('Roboto','13'))
+e_description.place(x=435,y=120)
 
 e_date = DateEntry(tab3,selectmode="day", date_pattern='dd-MM-yyyy')
-e_date.place(x=435,y=180)
+e_date.place(x=435,y=170)
 
 sec_hour = Spinbox(tab3,from_=0,to=23,wrap=True,width=5,justify=CENTER,state="readonly")
-sec_hour.place(x=435,y=230)
+sec_hour.place(x=435,y=220)
 
 min_sb = Spinbox(tab3,from_=0,to=59,wrap=True,width=5,state="readonly",justify=CENTER)
-min_sb.place(x=490,y=230)
+min_sb.place(x=490,y=220)
 
 my_list=['AM', 'PM']
 e_ampm = Spinbox(tab3,values=my_list,width=5,state="readonly",wrap=True)
-e_ampm.place(x=540,y=230)
+e_ampm.place(x=540,y=220)
 
-e_venue = ttk.Entry(tab3, width=20, font=('Roboto','13','bold'))
-e_venue.place(x=435,y=280)
+e_venue = ttk.Entry(tab3, width=20, font=('Roboto','13'))
+e_venue.place(x=435,y=270)
 
 post = Button(tab3, text="  Post  ", bg="blue", fg="white", font="Verdana 12 bold",command=eventpost)
 post.place(x=330, y=310)
